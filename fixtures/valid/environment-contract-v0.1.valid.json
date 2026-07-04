@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "validated-example",
+  "infrastructureManifest": {
+    "id": "infrastructure-as-code/environment-contract-v1",
+    "title": "Starter environment contract for mixed deployment surfaces",
+    "version": 1,
+    "scope": "multi-environment-rollout"
+  },
+  "authority": {
+    "owner": "infrastructure-as-code",
+    "canActOnBehalfOf": ["platform_ops"]
+  },
+  "infrastructureContract": {
+    "environment": {
+      "name": "agent-platform-staging",
+      "runtimeClass": "mixed",
+      "piiPolicy": "moderate",
+      "region": "us-east-1"
+    },
+    "topology": {
+      "components": [
+        {
+          "id": "agent-gateway",
+          "type": "gateway",
+          "provider": "hosted-edge",
+          "criticality": "high",
+          "dependencies": ["policy-store", "secrets-boundary"]
+        }
+      ],
+      "networkZones": [
+        {
+          "name": "public-ingress",
+          "egress": "restricted",
+          "ingress": "public"
+        }
+      ]
+    },
+    "dependencies": {
+      "requiredServices": ["policy-as-code", "security-as-code"],
+      "secretBoundary": "vault",
+      "dependencyPolicy": "strict"
+    },
+    "changeControl": {
+      "requiredApprovals": 2,
+      "reviewWindowDays": 14,
+      "maxOpenChanges": 3
+    },
+    "rollback": {
+      "enabled": true,
+      "maxDowntimeMinutes": 20,
+      "tested": true
+    },
+    "validation": {
+      "validationSamples": 2,
+      "validUntil": "2027-01-01T00:00:00Z",
+      "negativeCasesCovered": ["missing-secret-boundary", "unsafe-egress"]
+    }
+  },
+  "receiptRequirements": {
+    "environment": "environment-receipt.v0.1",
+    "dependency": "dependency-receipt.v0.1",
+    "secretBoundary": "secret-boundary-receipt.v0.1",
+    "review": "review-receipt.v0.1",
+    "deployment": "deployment-receipt.v0.1",
+    "rollback": "rollback-receipt.v0.1"
+  },
+  "adjacentRepos": [
+    "governance-as-code",
+    "security-as-code",
+    "compliance-as-code",
+    "policy-as-code"
+  ]
+}
