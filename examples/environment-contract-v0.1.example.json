@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "v0.1-draft",
+  "infrastructureManifest": {
+    "id": "infrastructure-as-code/environment-contract-v1",
+    "title": "Starter environment contract for mixed deployment surfaces",
+    "version": 1,
+    "scope": "multi-environment-rollout",
+    "description": "Minimal infrastructure packet describing topology, boundaries, and rollback expectations."
+  },
+  "authority": {
+    "owner": "infrastructure-as-code",
+    "canActOnBehalfOf": ["platform_ops", "sre_team"]
+  },
+  "infrastructureContract": {
+    "environment": {
+      "name": "agent-platform-staging",
+      "runtimeClass": "mixed",
+      "piiPolicy": "moderate",
+      "region": "us-east-1"
+    },
+    "topology": {
+      "components": [
+        {
+          "id": "agent-gateway",
+          "type": "gateway",
+          "provider": "hosted-edge",
+          "criticality": "high",
+          "dependencies": ["policy-store", "secrets-boundary"]
+        },
+        {
+          "id": "runtime-pool",
+          "type": "runtime",
+          "provider": "agent-runtime",
+          "criticality": "high",
+          "dependencies": ["agent-gateway", "bus-layer"]
+        },
+        {
+          "id": "bus-layer",
+          "type": "bus",
+          "provider": "local-bus",
+          "criticality": "medium",
+          "dependencies": ["runtime-pool"]
+        }
+      ],
+      "networkZones": [
+        {
+          "name": "public-ingress",
+          "egress": "restricted",
+          "ingress": "public"
+        },
+        {
+          "name": "internal-control",
+          "egress": "private-only",
+          "ingress": "vpn-only"
+        }
+      ]
+    },
+    "dependencies": {
+      "requiredServices": [
+        "policy-as-code",
+        "security-as-code",
+        "observability-as-code"
+      ],
+      "secretBoundary": "vault",
+      "dependencyPolicy": "strict"
+    },
+    "changeControl": {
+      "requiredApprovals": 2,
+      "reviewWindowDays": 14,
+      "maxOpenChanges": 3
+    },
+    "rollback": {
+      "enabled": true,
+      "maxDowntimeMinutes": 20,
+      "tested": true
+    },
+    "validation": {
+      "validationSamples": 3,
+      "validUntil": "2027-01-01T00:00:00Z",
+      "negativeCasesCovered": ["missing-secret-boundary", "unsafe-egress", "unbounded-rollout"]
+    }
+  },
+  "receiptRequirements": {
+    "environment": "environment-receipt.v0.1",
+    "dependency": "dependency-receipt.v0.1",
+    "secretBoundary": "secret-boundary-receipt.v0.1",
+    "review": "review-receipt.v0.1",
+    "deployment": "deployment-receipt.v0.1",
+    "rollback": "rollback-receipt.v0.1",
+    "exception": "exception-receipt.v0.1"
+  },
+  "adjacentRepos": [
+    "governance-as-code",
+    "security-as-code",
+    "compliance-as-code",
+    "observability-as-code",
+    "policy-as-code"
+  ]
+}

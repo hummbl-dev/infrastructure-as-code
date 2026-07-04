@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "v0.1",
+  "packetStatus": "validated-example",
+  "infrastructureManifest": {
+    "id": "infrastructure-as-code/environment-contract-v1",
+    "title": "Invalid infrastructure contract",
+    "version": 0,
+    "scope": "multi-environment-rollout"
+  },
+  "authority": {
+    "owner": "infrastructure-as-code",
+    "canActOnBehalfOf": []
+  },
+  "infrastructureContract": {
+    "environment": {
+      "name": "agent-platform-staging",
+      "runtimeClass": "mixed",
+      "piiPolicy": "extreme",
+      "region": "us-east-1"
+    },
+    "topology": {
+      "components": [
+        {
+          "id": "bad component",
+          "type": "gateway",
+          "provider": "hosted-edge",
+          "criticality": "high",
+          "dependencies": []
+        }
+      ],
+      "networkZones": []
+    },
+    "dependencies": {
+      "requiredServices": [],
+      "secretBoundary": "public",
+      "dependencyPolicy": "strict"
+    },
+    "changeControl": {
+      "requiredApprovals": 0,
+      "reviewWindowDays": 0,
+      "maxOpenChanges": 0
+    },
+    "rollback": {
+      "enabled": false,
+      "maxDowntimeMinutes": 0,
+      "tested": false
+    },
+    "validation": {
+      "validationSamples": 0,
+      "validUntil": "2023-01-01T00:00:00Z",
+      "negativeCasesCovered": []
+    }
+  },
+  "receiptRequirements": {
+    "environment": "environment-receipt.v0.1",
+    "dependency": "dependency-receipt.v0.1",
+    "secretBoundary": "",
+    "review": "review-receipt.v0.1",
+    "deployment": "",
+    "rollback": ""
+  }
+}
