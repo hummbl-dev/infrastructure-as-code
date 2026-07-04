@@ -24,7 +24,7 @@
 
 ## Non-canon guardrail
 
-- This packet is non-canon until HUMBL authority explicitly adopts it.
+- This packet is non-canon until HUMMBL authority explicitly adopts it.
 - No secrets, secrets payloads, or production claims are introduced here.
 
 ## Validation checks executed
