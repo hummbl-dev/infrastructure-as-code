@@ -3,7 +3,7 @@
 ## Packet identity
 
 - Repo: `infrastructure-as-code`
-- Packet folder: `seed -> v0.1-draft`
+- Packet status: `seed -> v0.1-draft`
 - Scope source: `infrastructure-as-code #4`
 - PR target: `chore/codex/infrastructure-as-code-v0-1-packet-main` (this change set)
 
@@ -32,3 +32,4 @@
 - Directory contract check: `docs/`, `schemas/`, `examples/`, `fixtures/valid/`, `fixtures/invalid/`, `receipts/`
 - Structural review against `hummbl-dev#70` and the shared v0.1 convention block
 - JSON syntax check: `python -m json.tool` on all new JSON payloads
+- Schema gate: valid fixtures must pass and invalid fixtures must fail against `schemas/infrastructure-as-code-v0.1.json`

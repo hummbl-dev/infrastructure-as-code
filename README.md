@@ -30,6 +30,7 @@
 - Schema: [`schemas/infrastructure-as-code-v0.1.json`](schemas/infrastructure-as-code-v0.1.json)
 - Example: [`examples/environment-contract-v0.1.example.json`](examples/environment-contract-v0.1.example.json)
 - Fixtures: [`fixtures/valid/environment-contract-v0.1.valid.json`](fixtures/valid/environment-contract-v0.1.valid.json), [`fixtures/invalid/environment-contract-v0.1.invalid.json`](fixtures/invalid/environment-contract-v0.1.invalid.json)
+- Receipt: [`receipts/infrastructure-as-code-v0.1-packet-receipt.md`](receipts/infrastructure-as-code-v0.1-packet-receipt.md)
 
 ## Status
 
